@@ -5,7 +5,11 @@ import { ResourceTypes } from "../libs/fhir/fhir-resource-types.js";
 import { ImmunizationCodeHelper } from "../libs/fhir/immunization-codes.js";
 import { DateUtils } from "../libs/date-utils.js";
 import { HealthCardStore } from "../libs/health-card-store.js";
+import { PersonalDetailsComponentFactory } from "../components/personal-details.js";
+import { TagNames } from "../components/tagnames.js";
+import { PatientResourceParser } from "../libs/fhir/patient-resource-parser.js";
 (() => {
+  PersonalDetailsComponentFactory.register();
   document.addEventListener("DOMContentLoaded", () => {
     // read card from context
     const card = new ContextStore().getCard();
@@ -161,31 +165,12 @@ import { HealthCardStore } from "../libs/health-card-store.js";
     const container = document.querySelector("#personDetails");
     if (patientResource) {
       container.classList.remove("hidden");
-      const uiMapping = [
-        { elementId: "surname", path: "resource/name/0/family" },
-        {
-          elementId: "givenName",
-          path: "resource/name/0/given",
-          fn: (value) => value?.join(" "),
-        },
-        { elementId: "dob", path: "resource/birthDate" },
-        {
-          elementId: "sex",
-          path: "resource/gender",
-          fn: (value) => {
-            if (value) {
-              return ["male", "m"].includes(value.toLowerCase()) ? "M" : "F";
-            }
-            return "";
-          },
-        },
-      ];
-
-      uiMapping.map((mapping) => {
-        const element = document.getElementById(mapping.elementId);
-        const data = getDataByPath(patientResource, mapping.path);
-        element.innerHTML = mapping.fn ? mapping.fn.call(null, data) : data;
-      });
+      const personalDetailsElement = document.querySelector(
+        TagNames.personalDetails
+      );
+      personalDetailsElement.setDetails(
+        PatientResourceParser.parse(patientResource)
+      );
     } else {
       container.classList.add("hidden");
     }
