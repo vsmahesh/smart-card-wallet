@@ -57,6 +57,9 @@ import { HealthCardStore } from "../libs/health-card-store.js";
     fetch("/verify", {
       method: "POST",
       cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ healthcard: card.data }),
     })
       .then(() => {
