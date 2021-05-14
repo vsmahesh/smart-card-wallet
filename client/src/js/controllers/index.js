@@ -9,4 +9,14 @@ import { HealthCardStore } from "../libs/health-card-store.js";
     const cards = new HealthCardStore().getAll();
     cardListComponent.setCards(cards);
   });
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then(function () {
+        console.log("Service worker registered!");
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }
 })();
