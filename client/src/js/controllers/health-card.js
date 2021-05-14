@@ -52,7 +52,7 @@ import { HealthCardStore } from "../libs/health-card-store.js";
       verifyCard(card);
     });
 
-    document.querySelector("lnkDelete").addEventListener("click", () => {
+    document.querySelector("#lnkDelete").addEventListener("click", () => {
       removeCard(card);
     });
   }
