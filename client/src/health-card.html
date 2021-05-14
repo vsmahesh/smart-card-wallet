@@ -3,12 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Health Card Wallet" />
+    <meta name="apple-mobile-web-app-title" content="Health Card Wallet" />
+    <meta name="msapplication-starturl" content="/" />
     <title>Health Card</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css"
     />
     <link rel="stylesheet" href="styles/main.css" />
+    <link rel="manifest" href="manifest.json" />
     <script src="./js/vendors/rawinflate.min.js"></script>
     <script src="./js/vendors/qrcode.min.js"></script>
     <script src="./js/controllers/health-card.js" type="module"></script>

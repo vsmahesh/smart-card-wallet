@@ -1,0 +1,10 @@
+{
+    "name": "Health Card Wallet",
+    "short_name": "Health Card Wallet",
+    "theme_color": "#2196f3",
+    "background_color": "#2196f3",
+    "display": "standalone",
+    "orientation": "portrait",
+    "scope": "/",
+    "start_url": "/"
+  }
