@@ -25,7 +25,7 @@ import { HealthCardStore } from "../libs/health-card-store.js";
 
     bindMeta(card);
 
-    bindTitle(decoded);
+    bindTitle(card, decoded);
 
     const patientResource =
       decoded?.vc?.credentialSubject?.fhirBundle?.entry.find(
@@ -41,7 +41,7 @@ import { HealthCardStore } from "../libs/health-card-store.js";
     bindImmunizationDataTable(immunizations);
   });
 
-  function bindTitle(decoded) {
+  function bindTitle(card, decoded) {
     card.title = getCardTitle(decoded);
     document.querySelector("#cardTitle").innerHTML = card.title;
     new HealthCardStore().saveCard(card);

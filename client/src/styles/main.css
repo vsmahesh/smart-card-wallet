@@ -87,7 +87,7 @@ div.immunization.container div.row > div {
   border-bottom: 1px solid var(--secondary-fore-color);
   padding: 3px 0;
 }
-
+/* ref: https://codepen.io/chris22smith/pen/kDtiE */
 div.personal-details.verified:after {
   content: "VERIFIED";
   position: absolute;
