@@ -15,10 +15,16 @@ import { HealthCardStore } from "../libs/health-card-store.js";
       return;
     }
 
+    if (!card.verifiedOn && !card.verificationFailed) {
+      // new card; try verifying it
+      verifyCard(card);
+    }
+
     const jwsHelper = new JWSHelper();
     const decoded = jwsHelper.decode(card.data);
 
-    bindMeta(card, decoded);
+    bindMeta(card);
+
     const patientResource =
       decoded?.vc?.credentialSubject?.fhirBundle?.entry.find(
         (entry) => entry.resource.resourceType == ResourceTypes.Patient
@@ -33,11 +39,12 @@ import { HealthCardStore } from "../libs/health-card-store.js";
     bindImmunizationDataTable(immunizations);
   });
 
-  function bindMeta(card, decoded) {
+  function bindMeta(card) {
     document.querySelector("#createdOn").innerHTML = card.createdOn;
     const verifyLink = document.querySelector("#lnkVerify");
     if (card.verifiedOn) {
       document.querySelector("#verifiedOn").innerHTML = card.verifiedOn;
+      document.querySelector("div.personal-details").classList.add("verified");
     } else {
       verifyLink.innerHTML = "Verify";
     }
@@ -55,8 +62,15 @@ import { HealthCardStore } from "../libs/health-card-store.js";
       .then(() => {
         card.verifiedOn = new DateUtils().toLocaleDateTimeString(new Date());
         new HealthCardStore().saveCard(card);
+        document
+          .querySelector("div.personal-details")
+          .classList.add("verified");
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        card.verificationFailed = 1;
+        new HealthCardStore().saveCard(card);
+        alert("Unable to verify the card");
+      });
   }
 
   function bindImmunizationDataTable(immunizations) {
