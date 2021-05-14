@@ -3,6 +3,8 @@ import { ContextStore } from "../libs/context-store.js";
 import { JWSHelper } from "../libs/jws-helper.js";
 import { ResourceTypes } from "../libs/fhir/fhir-resource-types.js";
 import { ImmunizationCodeHelper } from "../libs/fhir/immunization-codes.js";
+import { DateUtils } from "../libs/date-utils.js";
+import { HealthCardStore } from "../libs/health-card-store.js";
 (() => {
   document.addEventListener("DOMContentLoaded", () => {
     // read card from context
@@ -40,19 +42,21 @@ import { ImmunizationCodeHelper } from "../libs/fhir/immunization-codes.js";
       verifyLink.innerHTML = "Verify";
     }
     verifyLink.addEventListener("click", (_) => {
-      verifyCard(card, decoded);
+      verifyCard(card);
     });
   }
 
-  function verifyCard(card, decode) {
-    const issuerJwksUrl = `${decode.iss}/.well-known/jwks.json`;
-    fetch(issuerJwksUrl)
-      .then((response) => response.json())
-      .then()
-      .catch((e) => {
-        alert("Unable to fetch issuer's public key");
-        console.log("Error fetching JWKS", e);
-      });
+  function verifyCard(card) {
+    fetch("/verify", {
+      method: "POST",
+      cache: "no-cache",
+      body: JSON.stringify({ healthcard: card.data }),
+    })
+      .then(() => {
+        card.verifiedOn = new DateUtils().toLocaleDateTimeString(new Date());
+        new HealthCardStore().saveCard(card);
+      })
+      .catch((err) => console.error(err));
   }
 
   function bindImmunizationDataTable(immunizations) {
