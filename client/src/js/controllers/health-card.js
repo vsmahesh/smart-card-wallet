@@ -25,6 +25,8 @@ import { HealthCardStore } from "../libs/health-card-store.js";
 
     bindMeta(card);
 
+    bindTitle(decoded);
+
     const patientResource =
       decoded?.vc?.credentialSubject?.fhirBundle?.entry.find(
         (entry) => entry.resource.resourceType == ResourceTypes.Patient
@@ -38,6 +40,24 @@ import { HealthCardStore } from "../libs/health-card-store.js";
       );
     bindImmunizationDataTable(immunizations);
   });
+
+  function bindTitle(decoded) {
+    card.title = getCardTitle(decoded);
+    document.querySelector("#cardTitle").innerHTML = card.title;
+    new HealthCardStore().saveCard(card);
+  }
+
+  function getCardTitle(decoded) {
+    let result = "Health";
+    const types = decoded?.vc?.type;
+    if (types?.find((type) => type.endsWith("#immunization"))) {
+      result = "Immunization";
+    } else if (types?.find((type) => type.endsWith("#laboratory"))) {
+      result = "Laboratory";
+    }
+
+    return `${result} Card`;
+  }
 
   function bindMeta(card) {
     document.querySelector("#createdOn").innerHTML = card.createdOn;
