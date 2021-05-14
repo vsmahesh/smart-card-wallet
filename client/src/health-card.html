@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Health Card</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css"
+    />
+    <link rel="stylesheet" href="styles/main.css" />
+    <script src="./js/vendors/rawinflate.min.js"></script>
+    <script src="./js/vendors/qrcode.min.js"></script>
+    <script src="./js/controllers/health-card.js" type="module"></script>
+  </head>
+  <body>
+    <h1>Vaccintion Record</h1>
+    <hr />
+    <div class="" id="personDetails">
+      <div class="personal-details">
+        <div>
+          <span class="title">Surname/Nom/Appellidos</span>
+          <h2 id="surname">Langford</h2>
+        </div>
+        <div>
+          <span class="title">Given Names/Prénoms/Nmbres</span>
+          <h2 id="givenName">Josephine</h2>
+        </div>
+        <div>
+          <span class="title"
+            >Date of Birth/Date de naissance/Fecha de nacimiento</span
+          >
+          <h2 id="dob">Jan 26 1950</h2>
+        </div>
+
+        <div>
+          <span class="title">Sex/Sexe/Sexo</span>
+          <h2 id="sex">M</h2>
+        </div>
+      </div>
+      <hr />
+    </div>
+    <div class="qr-code-wrapper">
+      <div class="card qr-code shadowed">
+        <img src="" id="qr-code" alt="QR Code" />
+      </div>
+    </div>
+    <hr />
+    <div class="immunization container" id="tableContainer">
+      <!-- <div class="row">
+        <div class="col-sm-1">1</div>
+        <div class="col-sm-6">
+          <div>Covaxin</div>
+          <small>Bharat Biotech</small>
+        </div>
+        <div class="col-sm-5">
+          <div>03/30/2021</div>
+          <small>ABC Hospital</small>
+        </div>
+      </div> -->
+    </div>
+    <div>
+      <small>Created On: <span id="createdOn"></span> </small>
+    </div>
+    <div>
+      <small
+        >Last Verified On: <span id="verifiedOn">Never</span>
+        <a id="lnkVerify" href="#">Verify Again</a></small
+      >
+    </div>
+    <a href="/index.html" class="button">Go Back</a>
+  </body>
+</html>

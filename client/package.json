@@ -1,0 +1,32 @@
+{
+  "name": "health-card-wallet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watchAll",
+    "coverage": "jest --coverage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@happy-dom/jest-environment": "^2.19.0",
+    "@types/jest": "^26.0.23",
+    "faker": "^5.5.3",
+    "jest": "^26.6.3",
+    "jest-esm-transformer": "^1.0.0"
+  },
+  "jest": {
+    "verbose": false,
+    "transform": {
+      "\\.m?jsx?$": "jest-esm-transformer"
+    },
+    "transformIgnorePatterns":[
+      "/vendors/"
+    ],
+    "testEnvironment": "@happy-dom/jest-environment",
+    "setupFiles":["./test/__mocks__/base64.js", "./src/js/vendors/rawinflate.min.js"]
+  },
+  "dependencies": {}
+}

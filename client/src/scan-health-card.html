@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Immunization Card</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css"
+    />
+    <link rel="stylesheet" href="styles/main.css" />
+    <script src="js/vendors/html5-qrcode.min.js"></script>
+    <script src="js/controllers/scan-health-card.js" type="module"></script>
+  </head>
+  <body>
+    <h1>Add Health Card</h1>
+    <hr />
+    <button
+      id="btnScan"
+      data-start-label="Scan Now"
+      data-stop-label="Stop Scan"
+    >
+      Scan Now
+    </button>
+    <div id="reader"></div>
+  </body>
+</html>
