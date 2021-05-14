@@ -51,8 +51,18 @@ import { HealthCardStore } from "../libs/health-card-store.js";
     verifyLink.addEventListener("click", (_) => {
       verifyCard(card);
     });
+
+    document.querySelector("lnkDelete").addEventListener("click", () => {
+      removeCard(card);
+    });
   }
 
+  function removeCard(card) {
+    if (confirm("Are you sure to delete the health card?")) {
+      new HealthCardStore().deleteCard(card.id);
+      window.location.href = "/";
+    }
+  }
   function verifyCard(card) {
     fetch("/verify", {
       method: "POST",
@@ -68,6 +78,7 @@ import { HealthCardStore } from "../libs/health-card-store.js";
         document
           .querySelector("div.personal-details")
           .classList.add("verified");
+        document.querySelector("#verifiedOn").innerHTML = card.verifiedOn;
       })
       .catch((err) => {
         card.verificationFailed = 1;
