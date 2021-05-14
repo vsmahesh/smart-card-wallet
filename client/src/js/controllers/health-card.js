@@ -51,7 +51,7 @@ import { HealthCardStore } from "../libs/health-card-store.js";
     let result = "Health";
     const types = decoded?.vc?.type;
     if (types?.find((type) => type.endsWith("#immunization"))) {
-      result = "Immunization";
+      result = "Vaccination";
     } else if (types?.find((type) => type.endsWith("#laboratory"))) {
       result = "Laboratory";
     }
@@ -83,6 +83,7 @@ import { HealthCardStore } from "../libs/health-card-store.js";
       window.location.href = "/";
     }
   }
+
   function verifyCard(card) {
     fetch("/verify", {
       method: "POST",
@@ -92,13 +93,19 @@ import { HealthCardStore } from "../libs/health-card-store.js";
       },
       body: JSON.stringify({ healthcard: card.data }),
     })
-      .then(() => {
-        card.verifiedOn = new DateUtils().toLocaleDateTimeString(new Date());
-        new HealthCardStore().saveCard(card);
-        document
-          .querySelector("div.personal-details")
-          .classList.add("verified");
-        document.querySelector("#verifiedOn").innerHTML = card.verifiedOn;
+      .then((response) => {
+        if (!response.ok) {
+          card.verificationFailed = 1;
+          new HealthCardStore().saveCard(card);
+          alert("Unable to verify the card");
+        } else {
+          card.verifiedOn = new DateUtils().toLocaleDateTimeString(new Date());
+          new HealthCardStore().saveCard(card);
+          document
+            .querySelector("div.personal-details")
+            .classList.add("verified");
+          document.querySelector("#verifiedOn").innerHTML = card.verifiedOn;
+        }
       })
       .catch((err) => {
         card.verificationFailed = 1;
