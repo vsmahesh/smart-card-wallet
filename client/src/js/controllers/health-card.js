@@ -146,11 +146,12 @@ import { QRCodeComponentFactory } from "../components/qr-code.js";
     }
 
     if (code.coding) {
-      if (code.coding.display) {
-        return code.coding.display;
+      const firstCoding = code.coding[0];
+      if (firstCoding.display) {
+        return firstCoding.display;
       }
 
-      return new ImmunizationCodeHelper().getDisplayString(code.coding);
+      return new ImmunizationCodeHelper().getDisplayString(firstCoding);
     }
   }
 

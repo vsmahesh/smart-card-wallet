@@ -334,7 +334,7 @@ export function ImmunizationCodeHelper() {
     return (
       ImmunizationCodes.find((c) => c.system == coding.system)?.values.find(
         (c) => c.code == coding.code
-      )?.display || "Unknown"
+      )?.display || `${coding.code} (${coding.system})`
     );
   }
 
