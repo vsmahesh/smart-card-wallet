@@ -19,23 +19,18 @@ import { PatientResourceParser } from "../libs/fhir/patient-resource-parser.js";
       return;
     }
 
-    if (!card.verifiedOn && !card.verificationFailed) {
-      // new card; try verifying it
-      verifyCard(card);
-    }
-
     const jwsHelper = new JWSHelper();
     const decoded = jwsHelper.decode(card.data);
 
-    bindMeta(card);
+    if (!card.verifiedOn && !card.verificationFailed) {
+      // new card; try verifying it
+      verifyCard(card, decoded);
+    }
+
+    bindMeta(card, decoded);
 
     bindTitle(card, decoded);
-
-    const patientResource =
-      decoded?.vc?.credentialSubject?.fhirBundle?.entry.find(
-        (entry) => entry.resource.resourceType == ResourceTypes.Patient
-      );
-    bindPatientUI(patientResource);
+    bindPatientUI(card.verifiedOn, decoded);
     generateQRCode(card);
 
     const immunizations =
@@ -63,17 +58,16 @@ import { PatientResourceParser } from "../libs/fhir/patient-resource-parser.js";
     return `${result} Card`;
   }
 
-  function bindMeta(card) {
+  function bindMeta(card, decoded) {
     document.querySelector("#createdOn").innerHTML = card.createdOn;
     const verifyLink = document.querySelector("#lnkVerify");
     if (card.verifiedOn) {
       document.querySelector("#verifiedOn").innerHTML = card.verifiedOn;
-      document.querySelector("div.personal-details").classList.add("verified");
     } else {
       verifyLink.innerHTML = "Verify";
     }
     verifyLink.addEventListener("click", (_) => {
-      verifyCard(card);
+      verifyCard(card, decoded);
     });
 
     document.querySelector("#lnkDelete").addEventListener("click", () => {
@@ -88,7 +82,7 @@ import { PatientResourceParser } from "../libs/fhir/patient-resource-parser.js";
     }
   }
 
-  function verifyCard(card) {
+  function verifyCard(card, decoded) {
     fetch("/verify", {
       method: "POST",
       cache: "no-cache",
@@ -105,9 +99,7 @@ import { PatientResourceParser } from "../libs/fhir/patient-resource-parser.js";
         } else {
           card.verifiedOn = new DateUtils().toLocaleDateTimeString(new Date());
           new HealthCardStore().saveCard(card);
-          document
-            .querySelector("div.personal-details")
-            .classList.add("verified");
+          bindPatientUI(card.verifiedOn, decoded);
           document.querySelector("#verifiedOn").innerHTML = card.verifiedOn;
         }
       })
@@ -161,7 +153,12 @@ import { PatientResourceParser } from "../libs/fhir/patient-resource-parser.js";
     }
   }
 
-  function bindPatientUI(patientResource) {
+  function bindPatientUI(verifiedOn, decoded) {
+    const patientResource =
+      decoded?.vc?.credentialSubject?.fhirBundle?.entry.find(
+        (entry) => entry.resource.resourceType == ResourceTypes.Patient
+      );
+
     const container = document.querySelector("#personDetails");
     if (patientResource) {
       container.classList.remove("hidden");
@@ -169,7 +166,8 @@ import { PatientResourceParser } from "../libs/fhir/patient-resource-parser.js";
         TagNames.personalDetails
       );
       personalDetailsElement.setDetails(
-        PatientResourceParser.parse(patientResource)
+        PatientResourceParser.parse(patientResource),
+        verifiedOn
       );
     } else {
       container.classList.add("hidden");

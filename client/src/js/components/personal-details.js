@@ -9,8 +9,11 @@ class PersonalDetailsComponent extends HTMLElement {
   constructor() {
     super();
   }
-  setDetails(personalDetails) {
-    this.innerHTML = `<div class="personal-details">
+
+  setDetails(personalDetails, verifiedOn) {
+    this.innerHTML = `<div class="personal-details${
+      verifiedOn ? " verified" : ""
+    }">
       <div>
         <span class="title">Surname/Nom/Appellidos</span>
         <h2>${personalDetails.surName}</h2>

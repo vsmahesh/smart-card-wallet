@@ -29,4 +29,32 @@ describe("Personal Details Component", () => {
     expect(outerHTML).toContain(dob);
     expect(outerHTML).toContain("M");
   });
+
+  it("should add a css class 'verified' when verifiedOn is defined", () => {
+    const surName = StaticData.patientResource.resource.name[0].surName;
+    const givenName =
+      StaticData.patientResource.resource.name[0].given.join(" ");
+    const dob = StaticData.patientResource.resource.birthDate;
+    const sex = StaticData.patientResource.resource.gender;
+    component.setDetails(
+      new PersonalDetailsModel(surName, givenName, dob, sex),
+      "some value"
+    );
+    const outerHTML = component.outerHTML;
+    expect(outerHTML).toContain(`class="personal-details verified"`);
+  });
+  it("should remove the css class 'verified' when verifiedOn is undefined", () => {
+    const surName = StaticData.patientResource.resource.name[0].surName;
+    const givenName =
+      StaticData.patientResource.resource.name[0].given.join(" ");
+    const dob = StaticData.patientResource.resource.birthDate;
+    const sex = StaticData.patientResource.resource.gender;
+    component.setDetails(
+      new PersonalDetailsModel(surName, givenName, dob, sex),
+      undefined
+    );
+    const outerHTML = component.outerHTML;
+    expect(outerHTML).toContain(`class="personal-details"`);
+    expect(outerHTML).not.toContain(`class="personal-details verified"`);
+  });
 });
