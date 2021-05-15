@@ -8,8 +8,10 @@ import { HealthCardStore } from "../libs/health-card-store.js";
 import { PersonalDetailsComponentFactory } from "../components/personal-details.js";
 import { TagNames } from "../components/tagnames.js";
 import { PatientResourceParser } from "../libs/fhir/patient-resource-parser.js";
+import { QRCodeComponentFactory } from "../components/qr-code.js";
 (() => {
   PersonalDetailsComponentFactory.register();
+  QRCodeComponentFactory.register();
   document.addEventListener("DOMContentLoaded", () => {
     // read card from context
     const card = new ContextStore().getCard();
@@ -28,7 +30,6 @@ import { PatientResourceParser } from "../libs/fhir/patient-resource-parser.js";
     }
 
     bindMeta(card, decoded);
-
     bindTitle(card, decoded);
     bindPatientUI(card.verifiedOn, decoded);
     generateQRCode(card);
@@ -192,24 +193,7 @@ import { PatientResourceParser } from "../libs/fhir/patient-resource-parser.js";
   }
 
   function generateQRCode(card) {
-    const numericJws = card.data
-      .split("")
-      .map((c) => c.charCodeAt(0) - 45)
-      .flatMap((c) => [Math.floor(c / 10), c % 10])
-      .join("");
-
-    const segments = [
-      { data: "shc:/", mode: "byte" },
-      { data: numericJws, mode: "numeric" },
-    ];
-
-    QRCode.toDataURL(segments, (err, url) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      const qrCode = document.querySelector("#qr-code");
-      qrCode.src = url;
-    });
+    const qrElement = document.querySelector("healthcard-qr");
+    qrElement.setData(card.data);
   }
 })();

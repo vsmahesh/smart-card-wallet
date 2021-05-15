@@ -105,3 +105,113 @@ div.personal-details.verified:after {
   box-shadow: 0 0 2px #c00;
   filter: alpha(opacity=20);
 }
+
+personal-details:empty {
+  width: 100vw;
+  height: 130px;
+  display: block;
+}
+personal-details:empty::after {
+  /* background images */
+  --small-line-image: linear-gradient(white 5px, transparent 0);
+  --large-line-image: linear-gradient(white 15px, transparent 0);
+  --skelton-bg-image: linear-gradient(lightgrey 130px, transparent 0);
+  /* size */
+  --size-small-line: 100px 4px;
+  --size-large-line: 150px 15px;
+  /* position */
+  --position-r1c1-label: 20px 20px;
+  --position-r1c1-value: 20px 35px;
+  --position-r1c2-label: 190px 20px;
+  --position-r1c2-value: 190px 35px;
+  --position-r2c1-label: 20px 80px;
+  --position-r2c1-value: 20px 95px;
+  --position-r2c2-label: 190px 80px;
+  --position-r2c2-value: 190px 95px;
+
+  content: "";
+  width: 100%;
+  height: 100%;
+  display: block;
+  background-image: linear-gradient(
+      90deg,
+      rgba(211, 211, 211, 0),
+      rgba(211, 211, 211, 0.8) 50%,
+      rgba(211, 211, 211, 0)
+    ),
+    var(--small-line-image), var(--large-line-image), var(--small-line-image),
+    var(--large-line-image), var(--small-line-image), var(--large-line-image),
+    var(--small-line-image), var(--large-line-image), var(--skelton-bg-image);
+  background-repeat: no-repeat;
+  background-position: -150px 0, var(--position-r1c1-label),
+    var(--position-r1c1-value), var(--position-r1c2-label),
+    var(--position-r1c2-value), var(--position-r2c1-label),
+    var(--position-r2c1-value), var(--position-r2c2-label),
+    var(--position-r2c2-value), 0 0;
+  background-size: 40% 100%, var(--size-small-line), var(--size-large-line),
+    var(--size-small-line), var(--size-large-line), var(--size-small-line),
+    var(--size-large-line), var(--size-small-line), var(--size-large-line),
+    100% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  to {
+    background-position: 350px 0, var(--position-r1c1-label),
+      var(--position-r1c1-value), var(--position-r1c2-label),
+      var(--position-r1c2-value), var(--position-r2c1-label),
+      var(--position-r2c1-value), var(--position-r2c2-label),
+      var(--position-r2c2-value), 0 0;
+  }
+}
+#cardTitle:empty {
+  width: 60%;
+  height: 40px;
+  background-image: linear-gradient(lightgrey 40px, transparent 0);
+  margin: auto;
+}
+
+healthcard-qr:empty,
+healthcard-qr:empty::before,
+healthcard-qr:empty::after {
+  background: var(--text-color);
+  animation: loadQRcode 1s infinite ease-in-out;
+  width: 1em;
+  height: 4em;
+  display: block;
+}
+healthcard-qr:empty {
+  color: var(--text-color);
+  text-indent: -9999em;
+  margin: 88px auto;
+  position: relative;
+  font-size: 11px;
+  transform: translateZ(0);
+  animation-delay: -0.16s;
+}
+healthcard-qr:empty::before,
+healthcard-qr:empty::after {
+  position: absolute;
+  top: 0;
+  content: "";
+}
+healthcard-qr:empty::before {
+  left: -1.5em;
+  animation-delay: -0.32s;
+}
+healthcard-qr:empty::after {
+  left: 1.5em;
+}
+
+@keyframes loadQRcode {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em;
+    height: 5em;
+  }
+}

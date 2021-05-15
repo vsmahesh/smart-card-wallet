@@ -28,7 +28,6 @@ class PersonalDetailsComponent extends HTMLElement {
         >
         <h2>${personalDetails.dob}</h2>
       </div>
-
       <div>
         <span class="title">Sex/Sexe/Sexo</span>
         <h2>${personalDetails.sex}</h2>

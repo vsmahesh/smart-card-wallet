@@ -26,7 +26,7 @@
       "/vendors/"
     ],
     "testEnvironment": "@happy-dom/jest-environment",
-    "setupFiles":["./test/__mocks__/base64.js", "./src/js/vendors/rawinflate.min.js"]
+    "setupFiles":["./test/__mocks__/qr-mock.js"]
   },
   "dependencies": {}
 }
