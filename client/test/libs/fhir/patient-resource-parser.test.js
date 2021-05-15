@@ -16,7 +16,7 @@ describe("Patient Resource Parser", () => {
     const resource = StaticData.patientResource;
     delete resource.resource.name[0].given;
     const parsedValue = PatientResourceParser.parse(resource);
-    expect(parsedValue.givenName).toBeUndefined();
+    expect(parsedValue.givenName).toBe("");
   });
   it("should convert to single letter", () => {
     const resource = StaticData.patientResource;

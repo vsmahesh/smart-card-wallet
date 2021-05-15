@@ -5,7 +5,7 @@ export const PatientResourceParser = {
       {
         elementId: "givenName",
         path: "resource/name/0/given",
-        fn: (value) => value?.join(" "),
+        fn: (value) => value?.join(" ") || "",
       },
       { elementId: "dob", path: "resource/birthDate" },
       {
