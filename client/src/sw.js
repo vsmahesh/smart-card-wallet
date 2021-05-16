@@ -1,5 +1,5 @@
 const CACHE_APP_SHELL_NAME = "health-card-app";
-const CACHE_DYNAMIC_NAME = "v3.5";
+const CACHE_DYNAMIC_NAME = "v3.6";
 self.addEventListener("install", function (event) {
   console.log("[Service Worker] Installing Service Worker ...", event);
   event.waitUntil(
@@ -28,6 +28,7 @@ self.addEventListener("install", function (event) {
         "/js/components/card-list-item.js",
         "/js/components/card-list.js",
         "/js/components/tagnames.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css",
       ]);
     })
   );

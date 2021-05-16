@@ -88,22 +88,32 @@ div.immunization.container div.row > div {
   padding: 3px 0;
 }
 /* ref: https://codepen.io/chris22smith/pen/kDtiE */
-div.personal-details.verified:after {
-  content: "VERIFIED";
+div.personal-details.verified:after,
+div.personal-details.rejected:after {
+  --action-color: #046a38;
   position: absolute;
   top: 27px;
   left: 10px;
   z-index: 1;
   transform: rotate(-31deg);
-  color: #c00;
+  color: var(--action-color);
   padding: 5px 15px;
   zoom: 2.5;
-  border: solid 2px #c00;
+  border: solid 2px var(--action-color);
   opacity: 0.3;
   border-radius: 5px;
-  text-shadow: 0 0 2px #c00;
-  box-shadow: 0 0 2px #c00;
+  text-shadow: 0 0 2px var(--action-color);
+  box-shadow: 0 0 2px var(--action-color);
   filter: alpha(opacity=20);
+}
+
+div.personal-details.verified:after {
+  --action-color: #046a38;
+  content: "VERIFIED";
+}
+div.personal-details.rejected:after {
+  --action-color: #c00;
+  content: "REJECTED";
 }
 
 personal-details:empty {
