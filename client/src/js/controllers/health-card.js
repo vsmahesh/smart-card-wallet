@@ -27,11 +27,12 @@ import { QRCodeComponentFactory } from "../components/qr-code.js";
     if (!card.verifiedOn && !card.verificationFailed) {
       // new card; try verifying it
       verifyCard(card, decoded);
+    } else {
+      bindPatientUI(card.verifiedOn, decoded);
     }
 
     bindMeta(card, decoded);
     bindTitle(card, decoded);
-    bindPatientUI(card.verifiedOn, decoded);
     generateQRCode(card);
 
     const immunizations =
