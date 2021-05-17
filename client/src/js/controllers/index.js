@@ -8,6 +8,16 @@ import { HealthCardStore } from "../libs/health-card-store.js";
     const cardListComponent = document.querySelector(TagNames.cardList);
     const cards = new HealthCardStore().getAll();
     cardListComponent.setCards(cards);
+    if (cards.length > 0) {
+      document.querySelector("#lnkDeleteAll").addEventListener("click", () => {
+        if (confirm("Are you sure to clear all cards?")) {
+          new HealthCardStore().clearAll();
+          window.location.reload();
+        }
+      });
+    } else {
+      document.querySelector("#lnkDeleteAll").style.display = "none";
+    }
   });
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker

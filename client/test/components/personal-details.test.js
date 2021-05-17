@@ -43,7 +43,7 @@ describe("Personal Details Component", () => {
     const outerHTML = component.outerHTML;
     expect(outerHTML).toContain(`class="personal-details verified"`);
   });
-  it("should remove the css class 'verified' when verifiedOn is undefined", () => {
+  it("should have the css class 'rejected' when verifiedOn is undefined", () => {
     const surName = StaticData.patientResource.resource.name[0].surName;
     const givenName =
       StaticData.patientResource.resource.name[0].given.join(" ");
@@ -54,7 +54,6 @@ describe("Personal Details Component", () => {
       undefined
     );
     const outerHTML = component.outerHTML;
-    expect(outerHTML).toContain(`class="personal-details"`);
-    expect(outerHTML).not.toContain(`class="personal-details verified"`);
+    expect(outerHTML).toContain(`class="personal-details rejected"`);
   });
 });

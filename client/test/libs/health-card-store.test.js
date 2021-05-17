@@ -63,4 +63,19 @@ describe("Health Card Store", () => {
       expect(cards.length).toBe(numberOfCards);
     });
   });
+
+  it("can delete all items in the store", () => {
+    const store = new HealthCardStore();
+
+    const dataGenerator = new TestDataGenerator();
+    const mockData = dataGenerator.generateNCardData(3);
+    store.saveCard(mockData[0]);
+
+    store.clearAll();
+
+    let cards = store.getAll();
+    const numberOfCards = cards.length;
+
+    expect(numberOfCards).toBe(0);
+  });
 });

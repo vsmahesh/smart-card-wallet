@@ -23,6 +23,7 @@ export function HealthCardStore() {
   function getAll() {
     return JSON.parse(localStorage.getItem(STOREKEY)) || [];
   }
+
   function deleteCard(cardId) {
     let storeItems = getAll();
     let index = storeItems.findIndex((c) => c.id == cardId);
@@ -31,5 +32,9 @@ export function HealthCardStore() {
       saveCardStore(storeItems);
     }
   }
-  return Object.freeze({ saveCard, getAll, deleteCard });
+
+  function clearAll() {
+    saveCardStore([]);
+  }
+  return Object.freeze({ saveCard, getAll, deleteCard, clearAll });
 }
