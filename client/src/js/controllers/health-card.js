@@ -96,6 +96,7 @@ import { QRCodeComponentFactory } from "../components/qr-code.js";
         if (!response.ok) {
           card.verificationFailed = 1;
           new HealthCardStore().saveCard(card);
+          bindPatientUI(undefined, decoded);
           alert("Unable to verify the card");
         } else {
           card.verifiedOn = new DateUtils().toLocaleDateTimeString(new Date());
@@ -108,6 +109,7 @@ import { QRCodeComponentFactory } from "../components/qr-code.js";
         card.verificationFailed = 1;
         new HealthCardStore().saveCard(card);
         alert("Unable to verify the card");
+        bindPatientUI(undefined, decoded);
       });
   }
 
