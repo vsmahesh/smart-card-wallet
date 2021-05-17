@@ -12,7 +12,7 @@ class PersonalDetailsComponent extends HTMLElement {
 
   setDetails(personalDetails, verifiedOn) {
     this.innerHTML = `<div class="personal-details${
-      verifiedOn ? " verified" : ""
+      verifiedOn ? " verified" : " rejected"
     }">
       <div>
         <span class="title">Surname/Nom/Appellidos</span>
