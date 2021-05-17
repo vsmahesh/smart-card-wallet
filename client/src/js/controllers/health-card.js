@@ -126,21 +126,26 @@ import { QRCodeComponentFactory } from "../components/qr-code.js";
           <div>${parseVaccineCode(
             getDataByPath(immunization, "resource/vaccineCode")
           )}</div>
-          <small>${getDataByPath(immunization, "resource/lotNumber")}</small>
+          <small>${ifDefined(
+            getDataByPath(immunization, "resource/lotNumber")
+          )}</small>
         </div>
         <div class="col-sm-5">
           <div>${getDataByPath(
             immunization,
             "resource/occurrenceDateTime"
           )}</div>
-          <small>${getDataByPath(
-            immunization,
-            "resource/performer/0/actor/display"
+          <small>${ifDefined(
+            getDataByPath(immunization, "resource/performer/0/actor/display")
           )}</small>
         </div>`;
 
       tableContainer.appendChild(rowElement);
     });
+  }
+
+  function ifDefined(value) {
+    return value ? value : "";
   }
 
   function parseVaccineCode(code) {

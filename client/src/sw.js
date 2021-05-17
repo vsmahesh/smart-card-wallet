@@ -1,5 +1,5 @@
 const CACHE_APP_SHELL_NAME = "health-card-app";
-const CACHE_DYNAMIC_NAME = "v3.8";
+const CACHE_DYNAMIC_NAME = "v3.9";
 self.addEventListener("install", function (event) {
   console.log("[Service Worker] Installing Service Worker ...", event);
   event.waitUntil(
