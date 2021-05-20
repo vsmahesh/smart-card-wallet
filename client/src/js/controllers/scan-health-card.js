@@ -4,6 +4,7 @@ import { QRScannerHelper } from "../libs/qr-scanner-helper.js";
 import { HealthCardModel } from "../models/health-card-model.js";
 import { HealthCardStore } from "../libs/health-card-store.js";
 import { ContextStore } from "../libs/context-store.js";
+import { HealthCardTitleParser } from "../libs/fhir/health-card-title-parser.js";
 
 ((_) => {
   document.addEventListener("DOMContentLoaded", () => {
@@ -28,16 +29,20 @@ import { ContextStore } from "../libs/context-store.js";
   });
 
   function startScanning(button, html5QrCode, cameraId, qrScannerHelper) {
-    commonActions(button, "data-stop-label");
+    setButtonLabel(button, "data-stop-label");
     html5QrCode
       .start(cameraId, { fps: 10, qrbox: 250 }, (scannedQR) => {
-        stopQRScanner(html5QrCode);
+        stopScanning(button, html5QrCode);
         setTimeout(() => {
           try {
             const scannedJWS = qrScannerHelper.processQR(scannedQR);
+
+            const jwsHelper = new JWSHelper();
+            const decoded = jwsHelper.decode(card.data);
+
             const healthCard = new HealthCardModel(
               scannedJWS,
-              "Health Card",
+              HealthCardTitleParser.parse(decoded),
               new DateUtils().toLocaleDateTimeString(new Date()),
               undefined,
               Date.now()
@@ -60,20 +65,14 @@ import { ContextStore } from "../libs/context-store.js";
   }
 
   function stopScanning(button, html5QrCode) {
-    commonActions(button, "data-start-label");
-    stopQRScanner(html5QrCode);
-    setTimeout(() => {
-      window.location.reload();
-    }, 10);
-  }
-
-  function stopQRScanner(html5QrCode) {
+    setButtonLabel(button, "data-start-label");
     html5QrCode.stop().then((_) => {
       console.log("Scanning stoped");
+      html5QrCode.clear();
     });
   }
 
-  function commonActions(button, attributeName) {
+  function setButtonLabel(button, attributeName) {
     button.innerText = button.attributes[attributeName].value;
   }
 })();

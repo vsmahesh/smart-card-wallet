@@ -25,14 +25,13 @@ import { QRCodeComponentFactory } from "../components/qr-code.js";
     const decoded = jwsHelper.decode(card.data);
 
     if (!card.verifiedOn && !card.verificationFailed) {
-      // new card; try verifying it
+      // new card; try to verify it
       verifyCard(card, decoded);
     } else {
       bindPatientUI(card.verifiedOn, decoded);
     }
 
     bindMeta(card, decoded);
-    bindTitle(card, decoded);
     generateQRCode(card);
 
     const immunizations =
@@ -42,25 +41,8 @@ import { QRCodeComponentFactory } from "../components/qr-code.js";
     bindImmunizationDataTable(immunizations);
   });
 
-  function bindTitle(card, decoded) {
-    card.title = getCardTitle(decoded);
-    document.querySelector("#cardTitle").innerHTML = card.title;
-    new HealthCardStore().saveCard(card);
-  }
-
-  function getCardTitle(decoded) {
-    let result = "Health";
-    const types = decoded?.vc?.type;
-    if (types?.find((type) => type.endsWith("#immunization"))) {
-      result = "Vaccination";
-    } else if (types?.find((type) => type.endsWith("#laboratory"))) {
-      result = "Laboratory";
-    }
-
-    return `${result} Card`;
-  }
-
   function bindMeta(card, decoded) {
+    document.querySelector("#cardTitle").innerHTML = card.title;
     document.querySelector("#createdOn").innerHTML = card.createdOn;
     const verifyLink = document.querySelector("#lnkVerify");
     if (card.verifiedOn) {
