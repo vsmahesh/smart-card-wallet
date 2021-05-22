@@ -4,6 +4,12 @@ This is a PoC wallet application for demonstration. Actor of the application is 
 
 ### Running the application
 
+Deploy the src folder in any web server.
+
+TODO: add http-server node package and add command
+
+### Perpare Dev Env
+
 ```
 npm install
 ```
