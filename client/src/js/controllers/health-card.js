@@ -9,6 +9,7 @@ import { PersonalDetailsComponentFactory } from "../components/personal-details.
 import { TagNames } from "../components/tagnames.js";
 import { PatientResourceParser } from "../libs/fhir/patient-resource-parser.js";
 import { QRCodeComponentFactory } from "../components/qr-code.js";
+import { HealthCardVerifier } from "../libs/health-card-verifier.js";
 (() => {
   PersonalDetailsComponentFactory.register();
   QRCodeComponentFactory.register();
@@ -22,16 +23,22 @@ import { QRCodeComponentFactory } from "../components/qr-code.js";
     }
 
     const jwsHelper = new JWSHelper();
-    const decoded = jwsHelper.decode(card.data);
+    const decodedWithHeader = jwsHelper.decode(card.data);
+    const decoded = decodedWithHeader.payload;
 
     if (!card.verifiedOn && !card.verificationFailed) {
       // new card; try to verify it
-      verifyCard(card, decoded);
+      verifyCard(card, decodedWithHeader);
     } else {
       bindPatientUI(card.verifiedOn, decoded);
     }
 
-    bindMeta(card, decoded);
+    const verifyLink = document.querySelector("#lnkVerify");
+    verifyLink.addEventListener("click", (_) => {
+      verifyCard(card, decodedWithHeader);
+    });
+
+    bindMeta(card);
     generateQRCode(card);
 
     const immunizations =
@@ -41,7 +48,7 @@ import { QRCodeComponentFactory } from "../components/qr-code.js";
     bindImmunizationDataTable(immunizations);
   });
 
-  function bindMeta(card, decoded) {
+  function bindMeta(card) {
     document.querySelector("#cardTitle").innerHTML = card.title;
     document.querySelector("#createdOn").innerHTML = card.createdOn;
     const verifyLink = document.querySelector("#lnkVerify");
@@ -50,9 +57,6 @@ import { QRCodeComponentFactory } from "../components/qr-code.js";
     } else {
       verifyLink.innerHTML = "Verify";
     }
-    verifyLink.addEventListener("click", (_) => {
-      verifyCard(card, decoded);
-    });
 
     document.querySelector("#lnkDelete").addEventListener("click", () => {
       removeCard(card);
@@ -67,32 +71,29 @@ import { QRCodeComponentFactory } from "../components/qr-code.js";
   }
 
   function verifyCard(card, decoded) {
-    fetch("/verify", {
-      method: "POST",
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ healthcard: card.data }),
-    })
+    HealthCardVerifier.verify(
+      decoded.payload.iss,
+      decoded.header.kid,
+      card.data
+    )
       .then((response) => {
-        if (!response.ok) {
+        if (!response) {
           card.verificationFailed = 1;
           new HealthCardStore().saveCard(card);
-          bindPatientUI(undefined, decoded);
+          bindPatientUI(undefined, decoded.payload);
           alert("Unable to verify the card");
         } else {
           card.verifiedOn = new DateUtils().toLocaleDateTimeString(new Date());
           new HealthCardStore().saveCard(card);
-          bindPatientUI(card.verifiedOn, decoded);
+          bindPatientUI(card.verifiedOn, decoded.payload);
           document.querySelector("#verifiedOn").innerHTML = card.verifiedOn;
         }
       })
       .catch((err) => {
         card.verificationFailed = 1;
         new HealthCardStore().saveCard(card);
-        alert("Unable to verify the card");
-        bindPatientUI(undefined, decoded);
+        alert(`Unable to verify the card - ${err}`);
+        bindPatientUI(undefined, decoded.payload);
       });
   }
 

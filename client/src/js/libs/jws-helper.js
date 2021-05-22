@@ -4,9 +4,12 @@ export function JWSHelper() {
       throw new Error("Invalid Token");
     }
     try {
-      const jwsPayload = jws.split(".")[1];
-      const strData = base64_url_decode(jwsPayload);
-      const charData = strData.split("").map((e) => e.charCodeAt(0));
+      let header, jwsPayload;
+      [header, jwsPayload] = jws
+        .split(".")
+        .splice(0, 2)
+        .map((value) => base64_url_decode(value));
+      const charData = jwsPayload.split("").map((e) => e.charCodeAt(0));
       const binaryInput = new Uint8Array(charData);
       const inflate = new Zlib.RawInflate(binaryInput);
       const binaryResult = inflate.decompress();
@@ -14,7 +17,10 @@ export function JWSHelper() {
         null,
         new Uint16Array(binaryResult)
       );
-      return JSON.parse(result);
+      return {
+        payload: JSON.parse(result),
+        header: JSON.parse(header),
+      };
     } catch (e) {
       throw new Error("Invalid Token", e);
     }

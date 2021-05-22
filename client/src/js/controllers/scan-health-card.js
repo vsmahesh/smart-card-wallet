@@ -5,7 +5,7 @@ import { HealthCardModel } from "../models/health-card-model.js";
 import { HealthCardStore } from "../libs/health-card-store.js";
 import { ContextStore } from "../libs/context-store.js";
 import { HealthCardTitleParser } from "../libs/fhir/health-card-title-parser.js";
-
+import { JWSHelper } from "../libs/jws-helper.js";
 ((_) => {
   document.addEventListener("DOMContentLoaded", () => {
     const qrScannerHelper = new QRScannerHelper(Html5Qrcode);
@@ -38,7 +38,7 @@ import { HealthCardTitleParser } from "../libs/fhir/health-card-title-parser.js"
             const scannedJWS = qrScannerHelper.processQR(scannedQR);
 
             const jwsHelper = new JWSHelper();
-            const decoded = jwsHelper.decode(card.data);
+            const decoded = jwsHelper.decode(scannedJWS).payload;
 
             const healthCard = new HealthCardModel(
               scannedJWS,

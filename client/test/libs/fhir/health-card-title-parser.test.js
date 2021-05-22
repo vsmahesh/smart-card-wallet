@@ -1,4 +1,4 @@
-import { HealthCardTitleParser } from "./health-card-title-parser.js";
+import { HealthCardTitleParser } from "../../../src/js/libs/fhir/health-card-title-parser.js";
 describe("Health Card Title Parser", () => {
   it("should return `Immunization Card` when types contain immunization", () => {
     const cardData = {
