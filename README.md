@@ -6,13 +6,16 @@ This is a PoC wallet application for demonstration. Actor of the application is 
 
 Deploy the `src` folder in any web server.
 
-A good option would be to host this in the azure static website. 
+A good option would be to host this in the azure static website.
+
+> This is what I have deployed - https://purple-desert-09bb23310.azurestaticapps.net. Open in mobile browser so that you can scan.
 
 ### Perpare Dev Env
 
 ```
 npm install
 ```
+> This is a pure html/javascript application that run completely in the browser and do not require any build process
 
 ### Testing the application
 
