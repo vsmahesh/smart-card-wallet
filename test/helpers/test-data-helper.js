@@ -1,6 +1,6 @@
 import * as faker from "faker";
 import { DateUtils } from "../../src/js/libs/date-utils";
-import { HealthCardModel } from "../../src/js/models/health-card-model";
+import { HealthCardModel } from "../../src/js/libs/health-card-model";
 
 export const TestDataGenerator = Object.freeze({
   generateCardData: (populateId) => {
@@ -10,12 +10,11 @@ export const TestDataGenerator = Object.freeze({
       title: faker.lorem.words(2),
     };
 
-    const dateUtils = new DateUtils();
     const card = new HealthCardModel(
       undefined,
       fake.title,
-      dateUtils.toLocaleDateTimeString(fake.past),
-      dateUtils.toLocaleDateTimeString(fake.recent)
+      DateUtils.toLocaleDateTimeString(fake.past),
+      DateUtils.toLocaleDateTimeString(fake.recent)
     );
 
     if (populateId) {

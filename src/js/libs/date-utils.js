@@ -1,7 +1,5 @@
 "use strict";
-export function DateUtils() {
-  function toLocaleDateTimeString(date) {
-    return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
-  }
-  return Object.freeze({ toLocaleDateTimeString });
-}
+export const DateUtils = Object.freeze({
+  toLocaleDateTimeString: (date) =>
+    `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`,
+});

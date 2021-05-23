@@ -83,7 +83,7 @@ import { HealthCardVerifier } from "../libs/health-card-verifier.js";
           bindPatientUI(undefined, decoded.payload);
           alert("Unable to verify the card");
         } else {
-          card.verifiedOn = new DateUtils().toLocaleDateTimeString(new Date());
+          card.verifiedOn = DateUtils.toLocaleDateTimeString(new Date());
           HealthCardStore.saveCard(card);
           bindPatientUI(card.verifiedOn, decoded.payload);
           document.querySelector("#verifiedOn").innerHTML = card.verifiedOn;
