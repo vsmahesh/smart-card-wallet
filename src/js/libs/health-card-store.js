@@ -1,12 +1,15 @@
 "use strict";
-export function HealthCardStore() {
-  const STOREKEY = "HEALTHCARDSTORE";
-  function saveCard(card) {
+const STOREKEY = "HEALTHCARDSTORE";
+export const HealthCardStore = Object.freeze({
+  getAll: () => {
+    return JSON.parse(localStorage.getItem(STOREKEY)) || [];
+  },
+  saveCard: (card) => {
     if (!card.id) {
       card.id = Date.now();
     }
 
-    let storeItems = getAll();
+    let storeItems = HealthCardStore.getAll();
     let index = storeItems.findIndex((c) => c.id == card.id);
 
     if (index >= 0) {
@@ -15,26 +18,21 @@ export function HealthCardStore() {
       storeItems.push(card);
     }
     saveCardStore(storeItems);
-  }
-
-  function saveCardStore(storeItems) {
-    localStorage.setItem(STOREKEY, JSON.stringify(storeItems));
-  }
-  function getAll() {
-    return JSON.parse(localStorage.getItem(STOREKEY)) || [];
-  }
-
-  function deleteCard(cardId) {
-    let storeItems = getAll();
+  },
+  deleteCard: (cardId) => {
+    let storeItems = HealthCardStore.getAll();
     let index = storeItems.findIndex((c) => c.id == cardId);
     if (index >= 0) {
       storeItems.splice(index, 1);
       saveCardStore(storeItems);
     }
-  }
+  },
 
-  function clearAll() {
+  clearAll: () => {
     saveCardStore([]);
-  }
-  return Object.freeze({ saveCard, getAll, deleteCard, clearAll });
+  },
+});
+
+function saveCardStore(storeItems) {
+  localStorage.setItem(STOREKEY, JSON.stringify(storeItems));
 }

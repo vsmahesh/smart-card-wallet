@@ -65,7 +65,7 @@ import { HealthCardVerifier } from "../libs/health-card-verifier.js";
 
   function removeCard(card) {
     if (confirm("Are you sure to delete the health card?")) {
-      new HealthCardStore().deleteCard(card.id);
+      HealthCardStore.deleteCard(card.id);
       window.location.href = "/";
     }
   }
@@ -79,19 +79,19 @@ import { HealthCardVerifier } from "../libs/health-card-verifier.js";
       .then((response) => {
         if (!response) {
           card.verificationFailed = 1;
-          new HealthCardStore().saveCard(card);
+          HealthCardStore.saveCard(card);
           bindPatientUI(undefined, decoded.payload);
           alert("Unable to verify the card");
         } else {
           card.verifiedOn = new DateUtils().toLocaleDateTimeString(new Date());
-          new HealthCardStore().saveCard(card);
+          HealthCardStore.saveCard(card);
           bindPatientUI(card.verifiedOn, decoded.payload);
           document.querySelector("#verifiedOn").innerHTML = card.verifiedOn;
         }
       })
       .catch((err) => {
         card.verificationFailed = 1;
-        new HealthCardStore().saveCard(card);
+        HealthCardStore.saveCard(card);
         alert(`Unable to verify the card - ${err}`);
         bindPatientUI(undefined, decoded.payload);
       });

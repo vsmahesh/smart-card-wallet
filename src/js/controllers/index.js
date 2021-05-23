@@ -24,4 +24,4 @@ import { IndexView } from "../views/index.js";
         console.log(err);
       });
   }
-})(IndexView, new HealthCardStore());
+})(IndexView, HealthCardStore);
