@@ -3,7 +3,7 @@ import { TagNames } from "../../src/js/components/tagnames";
 describe("CardListComponent", () => {
   let component;
   beforeAll(() => {
-    new CardListComponentFactory().register();
+    CardListComponentFactory.register();
   });
 
   beforeEach(() => {

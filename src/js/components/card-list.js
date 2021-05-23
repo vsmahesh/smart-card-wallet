@@ -17,9 +17,6 @@ class CardListComponent extends HTMLElement {
   }
 }
 
-export function CardListComponentFactory() {
-  function register() {
-    customElements.define(TagNames.cardList, CardListComponent);
-  }
-  return Object.freeze({ register });
-}
+export const CardListComponentFactory = Object.freeze({
+  register: () => customElements.define(TagNames.cardList, CardListComponent),
+});
