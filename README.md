@@ -15,6 +15,7 @@ A good option would be to host this in the azure static website.
 ```
 npm install
 ```
+
 > This is a pure html/javascript application that run completely in the browser and do not require any build process
 
 ### Testing the application
@@ -36,3 +37,4 @@ Features yet to be implemented:
 3. Support for chunked health cards. See https://smarthealth.cards/#chunking
 4. Print health card
 5. Trust Registery
+6. Support for DiagnosticReport - https://www.hl7.org/fhir/diagnosticreport.html
