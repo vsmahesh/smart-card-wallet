@@ -1,7 +1,7 @@
 import { TagNames } from "../../src/js/components/tagnames";
 import { PersonalDetailsComponentFactory } from "../../src/js/components/personal-details";
 import { StaticData } from "../helpers/static-data-helper";
-import { PersonalDetailsModel } from "../../src/js/models/personal-detail-model";
+import { PersonalDetailsModel } from "../../src/js/libs/personal-detail-model";
 describe("Personal Details Component", () => {
   beforeAll(() => {
     PersonalDetailsComponentFactory.register();
