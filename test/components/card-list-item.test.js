@@ -22,8 +22,7 @@ describe("Card List Item", () => {
     new CardListItemComponentFactory().register();
     component = document.createElement(TagNames.cardListItem);
 
-    const dataGenerator = new TestDataGenerator();
-    const mockData = dataGenerator.generateCardData();
+    const mockData = TestDataGenerator.generateCardData();
 
     component.setCard(mockData);
 

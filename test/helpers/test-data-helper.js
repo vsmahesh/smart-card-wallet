@@ -1,8 +1,9 @@
 import * as faker from "faker";
 import { DateUtils } from "../../src/js/libs/date-utils";
 import { HealthCardModel } from "../../src/js/models/health-card-model";
-export function TestDataGenerator() {
-  function generateCardData(populateId) {
+
+export const TestDataGenerator = Object.freeze({
+  generateCardData: (populateId) => {
     const fake = {
       recent: faker.date.recent(),
       past: faker.date.past(),
@@ -21,19 +22,10 @@ export function TestDataGenerator() {
       card.id = Date.now();
     }
     return card;
-  }
-
-  function generateNCardData(n) {
-    const result = [];
-    for (var i = 0; i < n; i++) {
-      result.push(generateCardData());
-    }
-
-    return result;
-  }
-  function getFaker() {
-    return faker;
-  }
-
-  return Object.freeze({ generateCardData, generateNCardData, getFaker });
-}
+  },
+  generateNCardData: (n) =>
+    Array.from({ length: n || faker.datatype.number(10) }, () =>
+      TestDataGenerator.generateCardData(true)
+    ),
+  getFaker: () => faker,
+});

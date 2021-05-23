@@ -44,14 +44,13 @@ describe("QR Scanner Helper", () => {
   });
 
   describe("QR Code processor", () => {
-    const dataGenerator = new TestDataGenerator();
     test("there should be a method to process QR", () => {
       const helper = new QRScannerHelper({ getCameras: noCamera });
       expect(helper.processQR).toBeDefined();
     });
     test("should throw error when the data recieved do not start with shc:/", () => {
       const helper = new QRScannerHelper({ getCameras: noCamera });
-      const qrData = dataGenerator.getFaker().internet.url;
+      const qrData = TestDataGenerator.getFaker().internet.url;
       expect(() => helper.processQR(qrData)).toThrow();
     });
     test("should throw error when the data recieved is empty or undefined", () => {

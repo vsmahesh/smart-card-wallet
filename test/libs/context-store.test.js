@@ -19,7 +19,7 @@ describe("Context Storage", () => {
     expect(contextStore.setCard).toBeDefined();
   });
   test("setCard method should set the context card", () => {
-    const card = new TestDataGenerator().generateCardData(true);
+    const card = TestDataGenerator.generateCardData(true);
     contextStore.setCard(card);
     const cardInContext = contextStore.getCard();
     expect(cardInContext.title).toBe(card.title);

@@ -8,8 +8,7 @@ describe("Health Card Store", () => {
   describe("should support CRUD operations", () => {
     const store = new HealthCardStore();
 
-    const dataGenerator = new TestDataGenerator();
-    const mockData = dataGenerator.generateNCardData(3);
+    const mockData = TestDataGenerator.generateNCardData(3);
 
     test("store a new item", () => {
       expect(() => store.saveCard(mockData[0])).not.toThrow();
@@ -28,7 +27,7 @@ describe("Health Card Store", () => {
       let cards = store.getAll();
       const numberOfCards = cards.length;
       const cardId = cards[0].id;
-      const changedTitle = dataGenerator.getFaker().lorem.words(3);
+      const changedTitle = TestDataGenerator.getFaker().lorem.words(3);
 
       cards[0].title = changedTitle;
 
@@ -56,7 +55,7 @@ describe("Health Card Store", () => {
     test("delete should not fail when a nonexisting id provided", () => {
       let cards = store.getAll();
       const numberOfCards = cards.length;
-      const cardId = dataGenerator.getFaker().lorem.words(1);
+      const cardId = TestDataGenerator.getFaker().lorem.words(1);
 
       expect(() => store.deleteCard(cardId)).not.toThrow();
       cards = store.getAll();
@@ -67,8 +66,7 @@ describe("Health Card Store", () => {
   it("can delete all items in the store", () => {
     const store = new HealthCardStore();
 
-    const dataGenerator = new TestDataGenerator();
-    const mockData = dataGenerator.generateNCardData(3);
+    const mockData = TestDataGenerator.generateNCardData(3);
     store.saveCard(mockData[0]);
 
     store.clearAll();
