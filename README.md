@@ -38,3 +38,6 @@ Features yet to be implemented:
 4. Print health card
 5. Trust Registery
 6. Support for DiagnosticReport - https://www.hl7.org/fhir/diagnosticreport.html
+
+### Credits
+The QR Code scanner used is from https://github.com/mebjas/html5-qrcode
