@@ -26,7 +26,7 @@ npm test
 
 The application supports the following:
 
-1. Scan a health card QR code
+1. Scan a health card QR code (Using - https://github.com/mebjas/html5-qrcode)
 2. Verify a health card
 3. Present health card
 
