@@ -7,20 +7,6 @@ export const StaticData = {
     type: "VerifiableCredential",
     resourceType: "Bundle",
   },
-  patientResource: {
-    fullUrl: "resource:0",
-    resource: {
-      resourceType: "Patient",
-      name: [
-        {
-          family: "Anyperson",
-          given: ["John", "B."],
-        },
-      ],
-      birthDate: "1951-01-20",
-      gender: "M",
-    },
-  },
   jwks: {
     keys: [
       {
@@ -47,5 +33,160 @@ export const StaticData = {
         y: "jKcqirFw4G9v9gWTDCqAjvcCRQpbIK76bWqKBtseFzQ",
       },
     ],
+  },
+};
+
+export const FHIRResources = {
+  containedDiagnosticReport: {
+    fullUrl: "urn:uuid:88e8f2e2-16f6-49b0-b206-3130fcef46a0",
+    resource: {
+      resourceType: "DiagnosticReport",
+      id: "88e8f2e2-16f6-49b0-b206-3130fcef46a0",
+      meta: {
+        versionId: "3bc7c103-ab0f-45d7-b24f-d13aa9bd7aa0",
+        lastUpdated: "2021-05-24T12:21:04.068+05:30",
+      },
+      contained: [
+        {
+          resourceType: "Observation",
+          id: "obse8077482-b901-40bc-bba6-9a5e07a0cbf4",
+          status: "unknown",
+          code: {
+            text: "COVID-19 Test",
+          },
+          performer: [
+            {
+              reference: "#organization-054c0ec9-9d70-4f2b-bbb6-42989fb30dfd",
+              display: "MILLENNIUM-LIS",
+            },
+          ],
+          related: [
+            {
+              type: "derived-from",
+              target: {
+                reference: "#resultObs322ce142-39c5-4c96-9fe8-6e648e711d1f",
+              },
+            },
+          ],
+        },
+        {
+          resourceType: "Organization",
+          id: "organization-054c0ec9-9d70-4f2b-bbb6-42989fb30dfd",
+          type: [
+            {
+              text: "MB",
+            },
+          ],
+          name: "MILLENNIUM-LIS",
+        },
+        {
+          resourceType: "Observation",
+          id: "resultObs322ce142-39c5-4c96-9fe8-6e648e711d1f",
+          extension: [
+            {
+              url: "https://fhir.chbase.com/fhir/stu3/StructuredDefinition/lab-test-result-name",
+              valueString: "COVID-19 Test",
+            },
+          ],
+          status: "unknown",
+          code: {
+            coding: [
+              {
+                system:
+                  "https://fhir.chbase.com/fhir/stu3/ValueSet/Lab-Test-Results/AHSLabTestResults",
+                version: "2017-02-23",
+                code: "XAB2004452-2",
+              },
+            ],
+            text: "COVID-19 Test",
+          },
+          effectiveDateTime: "2021-05-07T16:07:00+05:30",
+          valueString: "Negative",
+          specimen: {
+            reference: "#specimen2b240372-9a76-4386-8674-0e14f976af61",
+          },
+        },
+        {
+          resourceType: "Specimen",
+          id: "specimen2b240372-9a76-4386-8674-0e14f976af61",
+          type: {
+            text: "1",
+          },
+        },
+        {
+          resourceType: "Organization",
+          id: "org0289fde6-73bb-4013-8e8d-c60f50455d80",
+          type: [
+            {
+              text: "Diagnostic and Scientific Centre",
+            },
+          ],
+          name: "UNKNOWN, PHYSICIAN",
+        },
+      ],
+      extension: [
+        {
+          url: "https://fhir.chbase.com/fhir/stu3/StructuredDefinition/thing-flags",
+          valueString: "ReadOnly",
+        },
+        {
+          url: "https://fhir.chbase.com/fhir/stu3/StructuredDefinition/thing-state",
+          valueString: "Active",
+        },
+        {
+          url: "https://fhir.chbase.com/fhir/stu3/StructuredDefinition/source",
+          valueString: "Netcare Connector",
+        },
+      ],
+      status: "unknown",
+      category: {
+        coding: [
+          {
+            system: "http://hl7.org/fhir/DiagnosticReport-category",
+            code: "LAB",
+          },
+        ],
+      },
+      code: {
+        coding: [
+          {
+            system:
+              "https://fhir.chbase.com/fhir/stu3/ValueSet/wc/chbase-datatypes",
+            version: "1",
+            code: "labtestresult",
+            display: "Lab Test Result",
+          },
+        ],
+      },
+      effectiveDateTime: "2021-05-07T16:07:00+05:30",
+      issued: "2021-05-07T16:07:00+05:30",
+      performer: [
+        {
+          actor: {
+            reference: "#org0289fde6-73bb-4013-8e8d-c60f50455d80",
+            display: "UNKNOWN, PHYSICIAN",
+          },
+        },
+      ],
+      result: [
+        {
+          reference: "#obse8077482-b901-40bc-bba6-9a5e07a0cbf4",
+        },
+      ],
+    },
+  },
+  patientResource: {
+    fullUrl: "resource:0",
+    resource: {
+      resourceType: "Patient",
+      name: [
+        {
+          family: "Anyperson",
+          given: ["John", "B."],
+        },
+      ],
+      birthDate: "1951-01-20",
+      gender: "M",
+    },
   },
 };

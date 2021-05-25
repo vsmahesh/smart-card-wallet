@@ -1,6 +1,6 @@
 import { TagNames } from "../../src/js/components/tagnames";
 import { PersonalDetailsComponentFactory } from "../../src/js/components/personal-details";
-import { StaticData } from "../helpers/static-data-helper";
+import { FHIRResources } from "../helpers/static-data-helper";
 import { PersonalDetailsModel } from "../../src/js/libs/personal-detail-model";
 describe("Personal Details Component", () => {
   beforeAll(() => {
@@ -15,11 +15,11 @@ describe("Personal Details Component", () => {
   });
 
   it("should accept personal details and render the UI", () => {
-    const surName = StaticData.patientResource.resource.name[0].surName;
+    const surName = FHIRResources.patientResource.resource.name[0].surName;
     const givenName =
-      StaticData.patientResource.resource.name[0].given.join(" ");
-    const dob = StaticData.patientResource.resource.birthDate;
-    const sex = StaticData.patientResource.resource.gender;
+      FHIRResources.patientResource.resource.name[0].given.join(" ");
+    const dob = FHIRResources.patientResource.resource.birthDate;
+    const sex = FHIRResources.patientResource.resource.gender;
     component.setDetails(
       new PersonalDetailsModel(surName, givenName, dob, sex)
     );
@@ -31,11 +31,11 @@ describe("Personal Details Component", () => {
   });
 
   it("should add a css class 'verified' when verifiedOn is defined", () => {
-    const surName = StaticData.patientResource.resource.name[0].surName;
+    const surName = FHIRResources.patientResource.resource.name[0].surName;
     const givenName =
-      StaticData.patientResource.resource.name[0].given.join(" ");
-    const dob = StaticData.patientResource.resource.birthDate;
-    const sex = StaticData.patientResource.resource.gender;
+      FHIRResources.patientResource.resource.name[0].given.join(" ");
+    const dob = FHIRResources.patientResource.resource.birthDate;
+    const sex = FHIRResources.patientResource.resource.gender;
     component.setDetails(
       new PersonalDetailsModel(surName, givenName, dob, sex),
       "some value"
@@ -44,11 +44,11 @@ describe("Personal Details Component", () => {
     expect(outerHTML).toContain(`class="personal-details verified"`);
   });
   it("should have the css class 'rejected' when verifiedOn is undefined", () => {
-    const surName = StaticData.patientResource.resource.name[0].surName;
+    const surName = FHIRResources.patientResource.resource.name[0].surName;
     const givenName =
-      StaticData.patientResource.resource.name[0].given.join(" ");
-    const dob = StaticData.patientResource.resource.birthDate;
-    const sex = StaticData.patientResource.resource.gender;
+      FHIRResources.patientResource.resource.name[0].given.join(" ");
+    const dob = FHIRResources.patientResource.resource.birthDate;
+    const sex = FHIRResources.patientResource.resource.gender;
     component.setDetails(
       new PersonalDetailsModel(surName, givenName, dob, sex),
       undefined

@@ -1,25 +1,29 @@
-import { StaticData } from "../../helpers/static-data-helper";
+import { FHIRResources } from "../../helpers/static-data-helper";
 import { PatientResourceParser } from "../../../src/js/libs/fhir/patient-resource-parser";
 describe("Patient Resource Parser", () => {
   it("should parse a resource", () => {
-    const parsedValue = PatientResourceParser.parse(StaticData.patientResource);
+    const parsedValue = PatientResourceParser.parse(
+      FHIRResources.patientResource
+    );
     expect(parsedValue.surName).toBe(
-      StaticData.patientResource.resource.name[0].family
+      FHIRResources.patientResource.resource.name[0].family
     );
     expect(parsedValue.givenName).toBe(
-      StaticData.patientResource.resource.name[0].given.join(" ")
+      FHIRResources.patientResource.resource.name[0].given.join(" ")
     );
-    expect(parsedValue.dob).toBe(StaticData.patientResource.resource.birthDate);
-    expect(parsedValue.sex).toBe(StaticData.patientResource.resource.gender);
+    expect(parsedValue.dob).toBe(
+      FHIRResources.patientResource.resource.birthDate
+    );
+    expect(parsedValue.sex).toBe(FHIRResources.patientResource.resource.gender);
   });
   it("should return empty when no given name", () => {
-    const resource = StaticData.patientResource;
+    const resource = FHIRResources.patientResource;
     delete resource.resource.name[0].given;
     const parsedValue = PatientResourceParser.parse(resource);
     expect(parsedValue.givenName).toBe("");
   });
   it("should convert to single letter", () => {
-    const resource = StaticData.patientResource;
+    const resource = FHIRResources.patientResource;
     [
       { value: "male", display: "M" },
       { value: "female", display: "F" },
