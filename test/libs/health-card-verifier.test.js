@@ -6,21 +6,21 @@ import {
 } from "../../src/js/libs/health-card-verifier";
 describe("Health Card Verifier", () => {
   it("should throw when 'iss' is undefined", () => {
-    return expect(() => HealthCardVerifier.verify(undefined)).toThrow(
-      HealthCardVerifierExceptions.NoIssuer
-    );
+    return expect(() =>
+      HealthCardVerifier.verify(undefined)
+    ).rejects.toThrowError(HealthCardVerifierExceptions.NoIssuer);
   });
 
   it("should throw if the iss is not a url", () => {
     return expect(() =>
       HealthCardVerifier.verify(faker.lorem.words(1), {})
-    ).toThrow(HealthCardVerifierExceptions.InvalidIssuer);
+    ).rejects.toThrowError(HealthCardVerifierExceptions.InvalidIssuer);
   });
 
   it("should throw when 'kid' is not available or undefined", () => {
     return expect(() =>
       HealthCardVerifier.verify(StaticData.SHC.iss, undefined)
-    ).toThrow(HealthCardVerifierExceptions.NoKid);
+    ).rejects.toThrowError(HealthCardVerifierExceptions.NoKid);
   });
 
   it("should throw if the iss url can not be reached", () => {
