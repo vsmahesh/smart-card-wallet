@@ -26,7 +26,7 @@ npm test
 
 The application supports the following:
 
-1. Scan a health card QR code
+1. Scan a health card QR code (Using - https://github.com/mebjas/html5-qrcode)
 2. Verify a health card
 3. Present health card
 
@@ -38,3 +38,6 @@ Features yet to be implemented:
 4. Print health card
 5. Trust Registery
 6. Support for DiagnosticReport - https://www.hl7.org/fhir/diagnosticreport.html
+
+### Credits
+The QR Code scanner used is from https://github.com/mebjas/html5-qrcode
