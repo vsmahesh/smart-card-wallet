@@ -22,7 +22,7 @@ describe("Context Storage", () => {
     const card = TestDataGenerator.generateCardData(true);
     contextStore.setCard(card);
     const cardInContext = contextStore.getCard();
-    expect(cardInContext.title).toBe(card.title);
+    expect(cardInContext.title).toEqual(card.title);
     expect(cardInContext.createdOn).toBe(card.createdOn);
     expect(cardInContext.id).toBe(card.id);
   });

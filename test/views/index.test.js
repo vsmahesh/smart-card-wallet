@@ -19,6 +19,8 @@ describe("Index View", () => {
     expect(element.children.length).toBe(cards.length);
   });
   it("should make the delete all link visible when there are cards", () => {
-    expect(lnkDelete.style.display).not.toBe("none");
+    if (cards.length > 0) {
+      expect(lnkDelete.style.display).not.toBe("none");
+    }
   });
 });

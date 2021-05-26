@@ -32,7 +32,7 @@ describe("Card List Item", () => {
       expect(outerHtml).toContain("fluid");
     });
     test("contains the title", () => {
-      expect(outerHtml).toContain(mockData.title);
+      expect(outerHtml).toContain(mockData.title.main);
     });
     test("contains created date", () => {
       expect(outerHtml).toContain(mockData.createdOn);

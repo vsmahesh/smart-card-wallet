@@ -7,7 +7,7 @@ export const TestDataGenerator = Object.freeze({
     const fake = {
       recent: faker.date.recent(),
       past: faker.date.past(),
-      title: faker.lorem.words(2),
+      title: { main: faker.lorem.words(2) },
     };
 
     const card = new HealthCardModel(

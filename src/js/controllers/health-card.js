@@ -10,6 +10,7 @@ import { TagNames } from "../components/tagnames.js";
 import { PatientResourceParser } from "../libs/fhir/patient-resource-parser.js";
 import { QRCodeComponentFactory } from "../components/qr-code.js";
 import { HealthCardVerifier } from "../libs/health-card-verifier.js";
+import { DiagnosticReportParser } from "../libs/fhir/diagnosticreport-resource-parser.js";
 (() => {
   PersonalDetailsComponentFactory.register();
   QRCodeComponentFactory.register();
@@ -46,10 +47,24 @@ import { HealthCardVerifier } from "../libs/health-card-verifier.js";
         (entry) => entry.resource.resourceType == ResourceTypes.Immunization
       );
     bindImmunizationDataTable(immunizations);
+
+    const diaganosticReport =
+      decoded?.vc?.credentialSubject?.fhirBundle?.entry.find(
+        (entry) => entry.resource.resourceType == ResourceTypes.DiagnosticReport
+      );
+    if (diaganosticReport) {
+      bindDiagnosticReportTable(diaganosticReport);
+    }
   });
 
   function bindMeta(card) {
-    document.querySelector("#cardTitle").innerHTML = card.title;
+    let cardTitle = card.title;
+    if (card.title.main) {
+      if (card.title.sub) {
+        cardTitle = `${card.title.sub}`;
+      }
+    }
+    document.querySelector("#cardTitle").innerHTML = cardTitle;
     document.querySelector("#createdOn").innerHTML = card.createdOn;
     const verifyLink = document.querySelector("#lnkVerify");
     if (card.verifiedOn) {
@@ -127,6 +142,28 @@ import { HealthCardVerifier } from "../libs/health-card-verifier.js";
     });
   }
 
+  function bindDiagnosticReportTable(diagnosticReport) {
+    const tableContainer = document.querySelector("#tableContainer");
+    let index = 1;
+    const parsedResult = DiagnosticReportParser.parse(
+      diagnosticReport.resource
+    );
+    parsedResult.results.map((resultItem) => {
+      const rowElement = document.createElement("div");
+      rowElement.classList.add("row");
+      rowElement.innerHTML = `
+        <div class="col-sm-1">${index++}</div>
+        <div class="col-sm-6">
+          <div>${resultItem.testName}</div>
+          <small>${ifDefined(resultItem.date)}</small>
+        </div>
+        <div class="col-sm-5">
+          <div>${resultItem.value}</div>
+        </div>`;
+
+      tableContainer.appendChild(rowElement);
+    });
+  }
   function ifDefined(value) {
     return value ? value : "";
   }

@@ -1,10 +1,14 @@
+const JSONPATH = {
+  surName: "resource/name/0/family",
+  givenName: "resource/name/0/given",
+};
 export const PatientResourceParser = {
   parse: (patientResource) => {
     const uiMapping = [
-      { elementId: "surName", path: "resource/name/0/family" },
+      { elementId: "surName", path: JSONPATH.surName },
       {
         elementId: "givenName",
-        path: "resource/name/0/given",
+        path: JSONPATH.givenName,
         fn: (value) => value?.join(" ") || "",
       },
       { elementId: "dob", path: "resource/birthDate" },
@@ -27,6 +31,15 @@ export const PatientResourceParser = {
         : data;
     });
     return result;
+  },
+  getName: (patientResource) => {
+    const surName = getDataByPath(patientResource, JSONPATH.surName);
+    const givenName = getDataByPath(patientResource, JSONPATH.givenName);
+
+    if (givenName) {
+      return `${givenName.join(" ")} ${surName}`;
+    }
+    return surName;
   },
 };
 

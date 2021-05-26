@@ -10,7 +10,15 @@ class CardListItemComponent extends HTMLElement {
   setCard(card) {
     const styles = ["card", "fluid"];
     this.classList.add(...styles);
-    this.innerHTML = `<h5>${card.title}<small>Created On: ${card.createdOn}</small><small>Verified On: ${card.verifiedOn}</small></h5>`;
+    let cardTitle = card.title;
+    if (card?.title?.main) {
+      cardTitle = card.title.main;
+      if (card?.title?.sub) {
+        cardTitle = `${card.title.main} (${card.title.sub})`;
+      }
+    }
+
+    this.innerHTML = `<h5>${cardTitle}<small>Created On: ${card.createdOn}</small><small>Verified On: ${card.verifiedOn}</small></h5>`;
     this.addEventListener("click", () => {
       new ContextStore().setCard(card);
       window.location.href = "/health-card.html";

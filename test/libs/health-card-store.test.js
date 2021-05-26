@@ -9,7 +9,7 @@ describe("Health Card Store", () => {
       const cards = HealthCardStore.getAll();
       expect(cards.length).toBe(1);
       expect(cards[0].id).toBeDefined();
-      expect(cards[0].title).toBe(mockData[0].title);
+      expect(cards[0].title).toEqual(mockData[0].title);
       expect(cards[0].createdOn).toBe(mockData[0].createdOn);
       expect(cards[0].verifiedOn).toBe(mockData[0].verifiedOn);
     });
