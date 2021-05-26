@@ -1,4 +1,4 @@
-const CACHE_APP_SHELL_NAME = "health-card-app";
+const CACHE_APP_SHELL_NAME = "health-card-app-4.1";
 const CACHE_DYNAMIC_NAME = "v4.1";
 self.addEventListener("install", function (event) {
   console.log("[Service Worker] Installing Service Worker ...", event);
@@ -15,26 +15,6 @@ self.addEventListener("install", function (event) {
         "/js/vendors/jws-verify.js",
         "/js/vendors/qrcode.min.js",
         "/js/vendors/rawinflate.min.js",
-        "/js/models/health-card-model.js",
-        "/js/models/personal-detail-model.js.js",
-        "/js/libs/fhir/fhir-resource-types.js",
-        "/js/libs/fhir/immunization-codes.js",
-        "/js/libs/fhir/health-card-title-parser.js",
-        "/js/libs/fhir/patient-resource-parser.js",
-        "/js/libs/context-store.js",
-        "/js/libs/date-utils.js",
-        "/js/libs/health-card-store.js",
-        "/js/libs/health-card-verifier.js",
-        "/js/libs/jws-helper.js",
-        "/js/libs/qr-scanner-helper.js",
-        "/js/controllers/health-card.js",
-        "/js/controllers/index.js",
-        "/js/controllers/scan-health-card.js",
-        "/js/components/card-list-item.js",
-        "/js/components/card-list.js",
-        "/js/components/personal-details.js",
-        "/js/components/qr-code.js",
-        "/js/components/tagnames.js",
         "https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css",
       ]);
     })
