@@ -1,5 +1,4 @@
-const CACHE_APP_SHELL_NAME = "health-card-app-4.1";
-const CACHE_DYNAMIC_NAME = "v4.1";
+const CACHE_APP_SHELL_NAME = "health-card-app-4.2";
 self.addEventListener("install", function (event) {
   console.log("[Service Worker] Installing Service Worker ...", event);
   event.waitUntil(
@@ -27,7 +26,7 @@ self.addEventListener("activate", function (event) {
     caches.keys().then((keys) => {
       return Promise.all(
         keys.map((key) => {
-          if (key != CACHE_APP_SHELL_NAME && key != CACHE_DYNAMIC_NAME) {
+          if (key != CACHE_APP_SHELL_NAME) {
             console.log("[Service Worker] Removing old cache.", key);
             return caches.delete(key);
           }

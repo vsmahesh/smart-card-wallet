@@ -2,6 +2,7 @@
 const STOREKEY = "HEALTHCARDSTORE";
 export const HealthCardStore = Object.freeze({
   getAll: () => {
+    console.log("New code with log");
     return JSON.parse(localStorage.getItem(STOREKEY)) || [];
   },
   saveCard: (card) => {
