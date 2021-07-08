@@ -12,11 +12,16 @@ import { QRCodeComponentFactory } from "../components/qr-code.js";
 import { HealthCardVerifier } from "../libs/health-card-verifier.js";
 import { DiagnosticReportParser } from "../libs/fhir/diagnosticreport-resource-parser.js";
 (() => {
+  function Log(...msg) {
+    console.log(...msg);
+  }
+
   PersonalDetailsComponentFactory.register();
   QRCodeComponentFactory.register();
   document.addEventListener("DOMContentLoaded", () => {
     // read card from context
     const card = new ContextStore().getCard();
+    Log("Card in context", card);
 
     if (!card) {
       window.location.href = "/";
@@ -28,14 +33,16 @@ import { DiagnosticReportParser } from "../libs/fhir/diagnosticreport-resource-p
     const decoded = decodedWithHeader.payload;
 
     if (!card.verifiedOn && !card.verificationFailed) {
-      // new card; try to verify it
+      Log("new card; try to verify it", decodedWithHeader, decoded);
       verifyCard(card, decodedWithHeader);
     } else {
+      Log("Existing card; no varification required");
       bindPatientUI(card.verifiedOn, decoded);
     }
 
     const verifyLink = document.querySelector("#lnkVerify");
     verifyLink.addEventListener("click", (_) => {
+      Log("Trigger Manual Verify");
       verifyCard(card, decodedWithHeader);
     });
 
